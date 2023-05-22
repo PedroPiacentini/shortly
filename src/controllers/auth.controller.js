@@ -16,3 +16,37 @@ export async function signUp(req, res) {
         res.status(500).send(err.message);
     }
 }
+
+export async function login(req, res) {
+    const { email, password } = req.body;
+
+    try {
+        const user = (await db.query(`SELECT * FROM users WHERE email=$1`, [email])).rows;
+        if (user.rowCount === 0) return res.sendStatus(401);
+
+        const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+        if (!isPasswordCorrect) return res.sendStatus(401);
+
+        const token = uuid();
+
+        await db.query(`
+            INSERT INTO tokens (name, email, password)
+                VALUES ($1, $2, $3);
+        `, [name, email, hash])
+        res.sendStatus(201);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+
+    try {
+
+        await db.query(`
+            INSERT INTO tokens (name, email, password)
+                VALUES ($1, $2, $3);
+        `, [name, email, hash])
+        res.sendStatus(201);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
