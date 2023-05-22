@@ -30,10 +30,11 @@ export async function login(req, res) {
         const token = uuid();
 
         await db.query(`
-            INSERT INTO tokens (name, email, password)
-                VALUES ($1, $2, $3);
-        `, [name, email, hash])
-        res.sendStatus(201);
+            INSERT INTO tokens (user_id, token)
+                VALUES ($1, $2);
+        `, [user.user_id, token]);
+
+        res.send({ token }).status(200);
 
     } catch (err) {
         res.status(500).send(err.message);
