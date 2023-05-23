@@ -52,7 +52,7 @@ export async function getRanking(req, res) {
             10;
         `);
 
-        res.status(200).send(user.rows[0]);
+        res.status(200).send(user.rows);
     } catch (err) {
         res.status(500).send(err.message);
     }
