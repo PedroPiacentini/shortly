@@ -45,9 +45,9 @@ export async function getRanking(req, res) {
             users
             LEFT JOIN urls ON users.user_id = urls.user_id
         GROUP BY
-            users.user_id, users.name
+            users.user_id, users.name, urls.visit_count
         ORDER BY
-            visitCount DESC
+            "visitCount" DESC
         LIMIT
             10;
         `);
