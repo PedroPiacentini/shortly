@@ -30,3 +30,31 @@ export async function getUserMe(req, res) {
         res.status(500).send(err.message);
     }
 }
+
+export async function getRanking(req, res) {
+    const { user_id } = res.locals.session;
+
+    try {
+
+        const user = await db.query(`
+        SELECT
+            users.user_id AS id,
+            users.name,
+            COUNT(urls.url_id) AS linksCount,
+            SUM(urls.visit_count) AS visitCount
+        FROM
+            users
+            LEFT JOIN urls ON users.user_id = urls.user_id
+        GROUP BY
+            users.user_id, users.name
+        ORDER BY
+            visitCount DESC
+        LIMIT
+            10;
+        `);
+
+        res.status(200).send(user.rows[0]);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
