@@ -8,5 +8,6 @@ const urlsRouter = Router();
 
 urlsRouter.post("/urls/shorten", validateSchema(urlSchema), authValidation, shorten);
 urlsRouter.get("/urls/:id", getUrlById);
+urlsRouter.get("/urls/open/:shortUrl", getUrlById);
 
 export default urlsRouter;
