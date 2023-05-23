@@ -7,8 +7,9 @@ import { deleteUrlById, getUrlById, redirect, shorten } from "../controllers/url
 const urlsRouter = Router();
 
 urlsRouter.post("/urls/shorten", validateSchema(urlSchema), authValidation, shorten);
+urlsRouter.delete("/urls/:id", authValidation, deleteUrlById);
 urlsRouter.get("/urls/:id", getUrlById);
 urlsRouter.get("/urls/open/:shortUrl", redirect);
-urlsRouter.delete("urls/:id", authValidation, deleteUrlById)
+
 
 export default urlsRouter;

@@ -66,17 +66,20 @@ export async function redirect(req, res) {
 }
 
 export async function deleteUrlById(req, res) {
+
     const { id } = req.params;
     const { user_id } = res.locals.session;
 
     try {
         const url = await db.query(`
-        SELECT * FROM urls WHERE url_id = $1
+        SELECT * FROM urls WHERE url_id = $1;
           `, [id]);
+
         if (url.rowCount === 0) return res.sendStatus(404);
+
         if (url.rows[0].user_id !== user_id) return res.sendStatus(401);
         await db.query(`
-        DELETE FROM urls WHERE url_id = $1
+        DELETE FROM urls WHERE url_id = $1;
           `, [id]);
         res.sendStatus(204);
 
