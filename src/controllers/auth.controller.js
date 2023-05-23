@@ -32,7 +32,7 @@ export async function login(req, res) {
         await db.query(`
             INSERT INTO tokens (user_id, token)
                 VALUES ($1, $2);
-        `, [user.rows.user_id, token]);
+        `, [user.rows[0].user_id, token]);
 
         res.send({ token }).status(200);
 
