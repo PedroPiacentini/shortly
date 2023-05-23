@@ -15,7 +15,7 @@ export async function getUserMe(req, res) {
             'shortUrl', urls.short_url,
             'url', urls.original_url,
             'visitCount', urls.visit_count
-            )) AS shortenedUrls
+            )) AS "shortenedUrls"
         FROM
             users
         INNER JOIN urls ON users.user_id = urls.user_id
@@ -39,7 +39,7 @@ export async function getRanking(req, res) {
         SELECT
             users.user_id AS id,
             users.name,
-            COUNT(urls.url_id) AS linksCount,
+            COUNT(urls.url_id) AS "linksCount",
             SUM(urls.visit_count) AS "visitCount"
         FROM
             users
