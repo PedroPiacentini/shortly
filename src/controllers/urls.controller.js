@@ -4,7 +4,6 @@ import { nanoid } from "nanoid";
 export async function shorten(req, res) {
     const { url } = req.body;
     const { user_id } = res.locals.session;
-    console.log(user_id)
 
     const shortUrl = nanoid(8);
 
@@ -73,7 +72,7 @@ export async function deleteUrlById(req, res) {
 
     try {
         const url = await db.query(`
-            ;
+        SELECT * FROM urls WHERE url_id = $1;
           `, [id]);
 
         if (url.rowCount === 0) return res.sendStatus(404);
