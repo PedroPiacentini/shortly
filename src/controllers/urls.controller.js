@@ -8,7 +8,6 @@ export async function shorten(req, res) {
     const shortUrl = nanoid(8);
 
     try {
-        const hash = bcrypt.hashSync(password, 10)
 
         const result = await db.query(`
             INSERT INTO urls (user_id, short_url, original_url, visit_count)
